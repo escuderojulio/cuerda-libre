@@ -1,0 +1,120 @@
+import { useMemo, useState } from 'react';
+
+const products = [
+  { id: 1, name: 'Yamaha F310', type: 'Acústicas', brand: 'Yamaha', price: 3899, tag: 'Más vendido', image: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=900&q=85', description: 'Una guitarra acústica de estilo tradicional, pensada para quienes quieren comenzar a tocar o tener un instrumento confiable para practicar. Su formato ofrece una presencia sonora amplia y equilibrada, adecuada para acompañar la voz y explorar distintos repertorios.', sound: 'Sonido acústico cálido y natural, apropiado para rasgueos, acordes abiertos y acompañamiento.', ideal: 'Principiantes y músicos que buscan una guitarra sencilla para practicar, componer y tocar en reuniones.' },
+  { id: 2, name: 'Fender Player Stratocaster', type: 'Eléctricas', brand: 'Fender', price: 18999, tag: 'Favorita', image: 'https://images.unsplash.com/photo-1564186763535-6f4a7b6d5f7a?w=900&q=85', description: 'La Stratocaster es uno de los diseños más reconocibles de la guitarra eléctrica. Su ergonomía y versatilidad la convierten en una opción para explorar desde sonidos limpios y definidos hasta tonos con saturación, dependiendo del amplificador y los efectos utilizados.', sound: 'Carácter brillante y articulado, con gran flexibilidad para cambiar de matices y estilos.', ideal: 'Guitarristas que disfrutan del rock, blues, pop, funk y otros géneros que requieren variedad tonal.' },
+  { id: 3, name: 'Cordoba C5', type: 'Clásicas', brand: 'Cordoba', price: 7299, tag: 'Ideal para empezar', image: 'https://images.unsplash.com/photo-1525201548942-d8732f6617a0?w=900&q=85', description: 'Una guitarra clásica de cuerdas de nylon, adecuada para desarrollar técnica, coordinación y control de ambas manos. La tensión y tacto característicos de este tipo de cuerdas ofrecen una experiencia cómoda para estudiar y acercarse a la música clásica o latinoamericana.', sound: 'Timbre suave, redondo y cálido, especialmente apropiado para tocar con los dedos.', ideal: 'Estudiantes, principiantes y guitarristas interesados en repertorio clásico, flamenco inicial o música acústica latina.' },
+  { id: 4, name: 'Ibanez GSR200', type: 'Bajos', brand: 'Ibanez', price: 6999, tag: 'Gran sonido', image: 'https://images.unsplash.com/photo-1516924962500-2b4b3b99ea02?w=900&q=85', description: 'Un bajo eléctrico de cuatro cuerdas diseñado para ofrecer una plataforma accesible con la que construir una base rítmica sólida. Su formato familiar facilita el aprendizaje de líneas de bajo, escalas y acompañamientos en una banda.', sound: 'Graves definidos y una respuesta versátil para sostener el ritmo y complementar guitarras y batería.', ideal: 'Personas que comienzan a tocar el bajo y músicos que buscan un instrumento práctico para ensayo y aprendizaje.' },
+  { id: 5, name: 'Epiphone Les Paul Special', type: 'Eléctricas', brand: 'Epiphone', price: 8999, tag: 'Recomendado', image: 'https://images.unsplash.com/photo-1550291652-6ea9114a47b1?w=900&q=85', description: 'Inspirada en la familia Les Paul, esta guitarra eléctrica apuesta por una estética clásica y una experiencia directa. Es una alternativa atractiva para quienes buscan un instrumento con personalidad para tocar riffs, acordes potentes y melodías principales.', sound: 'Tono con cuerpo y presencia, especialmente atractivo para rock y estilos que utilizan amplificación y efectos.', ideal: 'Guitarristas principiantes o intermedios que se inclinan por rock, hard rock, punk y sonidos eléctricos contundentes.' },
+  { id: 6, name: 'Taylor Academy 10', type: 'Acústicas', brand: 'Taylor', price: 14999, tag: 'Calidad premium', image: 'https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=900&q=85', description: 'Una acústica de enfoque cómodo y diseño cuidado, pensada para acompañar sesiones de práctica, composición y presentaciones. Su formato tradicional permite trabajar tanto patrones de rasgueo como arreglos de guitarra solista.', sound: 'Sonido acústico claro y balanceado, útil para mantener definición en acordes y melodías.', ideal: 'Músicos que buscan dar un paso adelante en comodidad y calidad para tocar en casa, componer o presentarse.' }
+];
+
+const money = n => n.toLocaleString('es-MX', { style: 'currency', currency: 'MXN', maximumFractionDigits: 0 });
+
+function App() {
+  const [page, setPage] = useState('inicio');
+  const [cart, setCart] = useState([]);
+  const [selected, setSelected] = useState(products[0]);
+  const [category, setCategory] = useState('Todas');
+  const [search, setSearch] = useState('');
+  const [notice, setNotice] = useState('');
+
+  const filtered = useMemo(() => products.filter(p =>
+    (category === 'Todas' || p.type === category) &&
+    (p.name.toLowerCase().includes(search.toLowerCase()) || p.brand.toLowerCase().includes(search.toLowerCase()))
+  ), [category, search]);
+
+  const addToCart = product => {
+    setCart(current => [...current, product]);
+    setNotice(`${product.name} se agregó al carrito`);
+    setTimeout(() => setNotice(''), 2400);
+  };
+
+  const go = (next) => { setPage(next); window.scrollTo({ top: 0, behavior: 'smooth' }); };
+  const openProduct = product => { setSelected(product); go('producto'); };
+  const total = cart.reduce((sum, p) => sum + p.price, 0);
+
+  return <div className="app-shell">
+    <div className="top-strip">Envíos a todo México · Asesoría gratuita para encontrar tu sonido</div>
+    <header className="header">
+      <button className="brand" onClick={() => go('inicio')} aria-label="Ir al inicio">
+        <span className="brand-mark">♪</span><span>CUERDA<span className="brand-light">LIBRE</span><small>ENCUENTRA TU SONIDO</small></span>
+      </button>
+      <nav className="nav">
+        {['inicio','catalogo','asesoria','ayuda'].map(item =>
+          <button key={item} className={page === item ? 'nav-link active' : 'nav-link'} onClick={() => go(item)}>
+            {{inicio:'Inicio',catalogo:'Catálogo',asesoria:'Asesoría',ayuda:'Ayuda'}[item]}
+          </button>
+        )}
+      </nav>
+      <div className="header-actions">
+        <button className="icon-btn" onClick={() => go('cuenta')} title="Mi cuenta">♙</button>
+        <button className="cart-btn" onClick={() => go('carrito')}>Carrito <span>{cart.length}</span></button>
+      </div>
+    </header>
+
+    {notice && <div className="notice">{notice}</div>}
+
+    <main>
+      {page === 'inicio' && <Home go={go} openProduct={openProduct} addToCart={addToCart} />}
+      {page === 'catalogo' && <section className="page-section">
+        <div className="eyebrow">EXPLORA NUESTRA SELECCIÓN</div><h1>Encuentra tu instrumento</h1>
+        <p className="lead">Instrumentos para cada etapa de tu camino musical.</p>
+        <div className="catalog-tools">
+          <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Buscar por nombre o marca..." />
+          <select value={category} onChange={e => setCategory(e.target.value)}>
+            {['Todas','Acústicas','Clásicas','Eléctricas','Bajos'].map(c => <option>{c}</option>)}
+          </select>
+        </div>
+        <div className="product-grid">{filtered.map(p => <ProductCard key={p.id} p={p} open={openProduct} add={addToCart} />)}</div>
+        {filtered.length === 0 && <p>No encontramos productos con esos filtros.</p>}
+      </section>}
+      {page === 'producto' && <section className="page-section product-detail">
+        <button className="back-link" onClick={() => go('catalogo')}>← Volver al catálogo</button>
+        <div className="detail-grid"><img src={selected.image} alt={selected.name} />
+          <div><div className="eyebrow">{selected.brand} · {selected.type}</div><h1>{selected.name}</h1>
+            <div className="price detail-price">{money(selected.price)}</div><p className="detail-description">{selected.description}</p><div className="detail-extra"><h3>Sonido y personalidad</h3><p>{selected.sound}</p><h3>¿Para quién es?</h3><p>{selected.ideal}</p></div>
+            <ul className="spec-list"><li>✓ Producto nuevo y garantizado</li><li>✓ Envíos a todo México</li><li>✓ Asesoría personalizada gratuita</li></ul>
+            <button className="primary-btn" onClick={() => addToCart(selected)}>Agregar al carrito</button>
+            <button className="secondary-btn" onClick={() => go('asesoria')}>Quiero asesoría</button>
+          </div>
+        </div>
+      </section>}
+      {page === 'asesoria' && <Advice />}
+      {page === 'carrito' && <section className="page-section"><div className="eyebrow">TU COMPRA</div><h1>Tu carrito</h1>
+        {cart.length === 0 ? <div className="empty-state"><div className="empty-icon">♫</div><h2>Tu carrito está esperando música</h2><p>Explora el catálogo y agrega tus instrumentos favoritos.</p><button className="primary-btn" onClick={() => go('catalogo')}>Explorar catálogo</button></div> :
+          <div className="cart-layout"><div className="cart-items">{cart.map((p,i) => <div className="cart-item" key={`${p.id}-${i}`}><img src={p.image} /><div><b>{p.name}</b><p>{p.brand}</p><strong>{money(p.price)}</strong></div><button onClick={() => setCart(c => c.filter((_,idx) => idx !== i))}>Quitar</button></div>)}</div>
+          <aside className="summary"><h3>Resumen</h3><div className="summary-line"><span>Productos ({cart.length})</span><b>{money(total)}</b></div><div className="summary-line"><span>Envío</span><span>Por calcular</span></div><hr/><div className="summary-line total"><b>Total</b><b>{money(total)}</b></div><button className="primary-btn full" onClick={() => setNotice('El proceso de pago se habilitará en una siguiente etapa.')}>Continuar compra</button><small>Prototipo académico: el pago aún no está habilitado.</small></aside></div>}
+      </section>}
+      {page === 'cuenta' && <section className="page-section narrow"><div className="eyebrow">BIENVENIDO DE NUEVO</div><h1>Mi cuenta</h1><p className="lead">Accede a tus pedidos, citas y datos personales.</p><form className="form-card" onSubmit={e => {e.preventDefault();setNotice('Inicio de sesión de demostración: próximamente.')}}><label>Correo electrónico<input type="email" placeholder="tu@correo.com" required /></label><label>Contraseña<input type="password" placeholder="Tu contraseña" required /></label><button className="primary-btn full">Iniciar sesión</button><p className="form-note">¿Aún no tienes cuenta? El registro estará disponible próximamente.</p></form></section>}
+      {page === 'ayuda' && <section className="page-section narrow"><div className="eyebrow">ESTAMOS PARA AYUDARTE</div><h1>¿Cómo podemos ayudarte?</h1><div className="faq"><details><summary>¿Realizan envíos a todo México?</summary><p>Sí, nuestro objetivo es ofrecer envíos a toda la República Mexicana.</p></details><details><summary>¿Puedo recibir ayuda para elegir una guitarra?</summary><p>Claro. Puedes solicitar una asesoría gratuita desde la sección Asesoría.</p></details><details><summary>¿Puedo escuchar cómo suena un instrumento?</summary><p>Estamos preparando fichas de producto con muestras de audio.</p></details></div></section>}
+    </main>
+
+    <footer className="footer"><div className="footer-main"><div className="footer-brand"><div className="footer-logo">♪ CUERDA LIBRE</div><p>Tu música comienza con el instrumento correcto.</p></div><div><b>Explora</b><button onClick={() => go('catalogo')}>Catálogo</button><button onClick={() => go('asesoria')}>Asesoría</button></div><div><b>Atención</b><button onClick={() => go('ayuda')}>Preguntas frecuentes</button><button onClick={() => go('cuenta')}>Mi cuenta</button></div></div><div className="footer-bottom">© 2026 Cuerda Libre · Proyecto académico</div></footer>
+  </div>;
+}
+
+function Home({go, openProduct, addToCart}) {
+  return <>
+    <section className="hero"><div className="hero-copy"><div className="eyebrow light">EL SONIDO QUE ESTÁS BUSCANDO</div><h1>Tu música.<br/><em>Tu instrumento.</em><br/>Tu historia.</h1><p>Encuentra la guitarra ideal para darle vida a todo lo que llevas dentro.</p><div className="hero-actions"><button className="cream-btn" onClick={() => go('catalogo')}>Explorar instrumentos <span>→</span></button><button className="text-btn" onClick={() => go('asesoria')}>Agenda una asesoría gratuita</button></div></div><div className="hero-image"><div className="hero-badge">ENCUENTRA<br/>TU SONIDO</div></div></section>
+    <section className="trust-row"><div><b>✦ Asesoría personalizada</b><span>Te ayudamos a elegir</span></div><div><b>♧ Envíos nacionales</b><span>Tu instrumento hasta tu puerta</span></div><div><b>♫ Pasión por la música</b><span>Para principiantes y expertos</span></div></section>
+    <section className="section-pad"><div className="section-heading"><div><div className="eyebrow">EXPLORA POR CATEGORÍA</div><h2>¿Qué sonido buscas?</h2></div><button className="arrow-link" onClick={() => go('catalogo')}>Ver catálogo completo →</button></div>
+      <div className="category-grid">{[['Acústicas','Madera, calidez y libertad','photo-1510915361894-db8b60106cb1'],['Clásicas','El sonido de siempre','photo-1525201548942-d8732f6617a0'],['Eléctricas','Haz que se escuche tu estilo','photo-1564186763535-6f4a7b6d5f7a'],['Bajos','El ritmo empieza aquí','photo-1516924962500-2b4b3b99ea02']].map(([name,desc,img])=><button className="category-card" onClick={()=>{go('catalogo')}} style={{backgroundImage:`linear-gradient(0deg,rgba(14,29,39,.85),rgba(14,29,39,.05)),url(https://images.unsplash.com/${img}?w=700&q=80)`}}><span>{name}</span><small>{desc}</small></button>)}</div>
+    </section>
+    <section className="featured section-pad"><div className="section-heading"><div><div className="eyebrow">SELECCIÓN CUERDA LIBRE</div><h2>Instrumentos destacados</h2></div><button className="arrow-link" onClick={()=>go('catalogo')}>Descubrir más →</button></div><div className="product-grid">{products.slice(0,4).map(p=><ProductCard key={p.id} p={p} open={openProduct} add={addToCart}/>)}</div></section>
+    <section className="advice-banner"><div><div className="eyebrow light">¿NO SABES POR DÓNDE EMPEZAR?</div><h2>La guitarra ideal<br/>está más cerca de lo que crees.</h2><p>Habla con alguien que entiende de música. Te ayudamos a encontrarla.</p><button className="cream-btn" onClick={()=>go('asesoria')}>Agenda tu asesoría gratuita →</button></div><div className="advice-art">♫</div></section>
+  </>;
+}
+
+function ProductCard({p,open,add}) {
+  return <article className="product-card"><button className="product-image" onClick={()=>open(p)}><img src={p.image} alt={p.name}/><span>{p.tag}</span></button><div className="product-info"><small>{p.brand} · {p.type}</small><button className="product-name" onClick={()=>open(p)}>{p.name}</button><div className="product-bottom"><b>{money(p.price)}</b><button onClick={()=>add(p)} aria-label={`Agregar ${p.name}`}>+</button></div></div></article>;
+}
+
+function Advice() {
+  const [sent,setSent] = useState(false);
+  return <section className="page-section"><div className="advice-page"><div><div className="eyebrow">ASESORÍA PERSONALIZADA</div><h1>Encontremos tu sonido.</h1><p className="lead">Cuéntanos qué buscas y agenda un espacio para recibir orientación sobre tu próximo instrumento.</p><div className="advice-points"><p>✓ Atención pensada en tu nivel y estilo</p><p>✓ Recomendaciones según tu presupuesto</p><p>✓ Una experiencia cercana y sin presión</p></div></div>
+    {sent ? <div className="form-card success"><div className="success-icon">✓</div><h2>¡Solicitud recibida!</h2><p>Esta es una confirmación de demostración. La agenda real se conectará posteriormente.</p></div> :
+    <form className="form-card" onSubmit={e=>{e.preventDefault();setSent(true)}}><h2>Solicita tu asesoría</h2><label>Nombre completo<input required placeholder="Tu nombre"/></label><label>Correo electrónico<input type="email" required placeholder="tu@correo.com"/></label><label>¿Qué instrumento te interesa?<select><option>Guitarra acústica</option><option>Guitarra clásica</option><option>Guitarra eléctrica</option><option>Bajo</option><option>Aún no lo sé</option></select></label><label>Fecha preferida<input type="date" required min={new Date().toISOString().split('T')[0]}/></label><label>Cuéntanos un poco más<textarea rows="3" placeholder="Tu experiencia, estilo musical o presupuesto..."/></label><button className="primary-btn full">Enviar solicitud</button><small>Formulario demostrativo; no se envían datos a un servidor.</small></form>}</div></section>;
+}
+
+export default App;
