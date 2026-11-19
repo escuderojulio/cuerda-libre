@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 const products = [
   { id: 1, name: 'Yamaha F310', type: 'Acústicas', brand: 'Yamaha', price: 3899, tag: 'Más vendido', image: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=900&q=85', description: 'Una guitarra acústica de estilo tradicional, pensada para quienes quieren comenzar a tocar o tener un instrumento confiable para practicar. Su formato ofrece una presencia sonora amplia y equilibrada, adecuada para acompañar la voz y explorar distintos repertorios.', sound: 'Sonido acústico cálido y natural, apropiado para rasgueos, acordes abiertos y acompañamiento.', ideal: 'Principiantes y músicos que buscan una guitarra sencilla para practicar, componer y tocar en reuniones.' },
