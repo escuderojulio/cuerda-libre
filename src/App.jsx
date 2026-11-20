@@ -1,5 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react';
 
+const rawDate = typeof __LAST_MODIFIED__ !== 'undefined' ? __LAST_MODIFIED__ : document.lastModified;
+const lastModified = new Date(rawDate).toLocaleDateString('es-MX', {
+  day: 'numeric',
+  month: 'long',
+  year: 'numeric',
+  hour: '2-digit',
+  minute: '2-digit'
+});
 
 const products = [
   { id: 1, name: 'Yamaha F310', type: 'Acústicas', brand: 'Yamaha', price: 3899, tag: 'Más vendido', image: '/img/yamaha.jpg', description: 'Una guitarra acústica de estilo tradicional, pensada para quienes quieren comenzar a tocar o tener un instrumento confiable para practicar. Su formato ofrece una presencia sonora amplia y equilibrada, adecuada para acompañar la voz y explorar distintos repertorios.', sound: 'Sonido acústico cálido y natural, apropiado para rasgueos, acordes abiertos y acompañamiento.', ideal: 'Principiantes y músicos que buscan una guitarra sencilla para practicar, componer y tocar en reuniones.' },
@@ -143,7 +151,7 @@ function App() {
       {page === 'ayuda' && <section className="page-section narrow"><div className="eyebrow">ESTAMOS PARA AYUDARTE</div><h1>¿Cómo podemos ayudarte?</h1><div className="faq"><details><summary>¿Realizan envíos a todo México?</summary><p>Sí, nuestro objetivo es ofrecer envíos a toda la República Mexicana, con paquetería asegurada. Por ahora solo vendemos dentro de México.</p></details><details><summary>¿Puedo recibir ayuda para elegir una guitarra?</summary><p>Claro. Puedes solicitar una asesoría gratuita desde la sección Asesoría.</p></details><details><summary>¿Puedo escuchar cómo suena un instrumento?</summary><p>Estamos preparando fichas de producto con muestras de audio.</p></details><details><summary>Envíos y devoluciones</summary><p>Puedes solicitar la devolución dentro de los primeros 7 días posteriores a la entrega, con el instrumento sin uso indebido y en su empaque original. Los términos completos se publicarán antes de abrir la tienda.</p></details><details><summary>Aviso de privacidad</summary><p>Usamos tus datos solo para procesar pedidos, coordinar envíos y agendar asesorías. Podrás ejercer tus derechos de acceso, rectificación, cancelación y oposición (ARCO). El texto completo del aviso se publicará conforme a la ley mexicana de protección de datos.</p></details><details open><summary>Contacto y domicilio</summary><Address /></details></div></section>}
     </main>
 
-    <footer className="footer"><div className="footer-main"><div className="footer-brand"><div className="footer-logo">♪ CUERDA LIBRE</div><p>Tu música comienza con el instrumento correcto.</p></div><div><b>Explora</b><button onClick={() => go('catalogo')}>Catálogo</button><button onClick={() => go('asesoria')}>Asesoría</button><button onClick={() => go('aprende')}>Aprende</button></div><div><b>Atención</b><button onClick={() => go('ayuda')}>Preguntas frecuentes</button><button onClick={() => go('ayuda')}>Aviso de privacidad</button><button onClick={() => go('cuenta')}>Mi cuenta</button></div><div><b>Domicilio</b><Address /></div></div><div className="footer-bottom">© 2026 Cuerda Libre · Proyecto académico · Precios en MXN con IVA incluido</div></footer>
+    <footer className="footer"><div className="footer-main"><div className="footer-brand"><div className="footer-logo">♪ CUERDA LIBRE</div><p>Tu música comienza con el instrumento correcto.</p></div><div><b>Explora</b><button onClick={() => go('catalogo')}>Catálogo</button><button onClick={() => go('asesoria')}>Asesoría</button><button onClick={() => go('aprende')}>Aprende</button></div><div><b>Atención</b><button onClick={() => go('ayuda')}>Preguntas frecuentes</button><button onClick={() => go('ayuda')}>Aviso de privacidad</button><button onClick={() => go('cuenta')}>Mi cuenta</button></div><div><b>Domicilio</b><Address /></div></div><div className="footer-bottom">© 2026 Cuerda Libre · Proyecto académico · Precios en MXN con IVA incluido · Última actualización: {lastModified}</div></footer>
   </div>;
 }
 
