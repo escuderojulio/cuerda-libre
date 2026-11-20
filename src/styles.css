@@ -18,3 +18,124 @@ label.check{display:flex;gap:8px;align-items:flex-start;font-weight:400;line-hei
 .tabs{display:flex;flex-wrap:wrap;gap:8px;margin:24px 0}.tab{border:1px solid #d9d2c3;background:#fff;color:#1F3A5F;padding:10px 14px;font-size:12px;font-weight:700}.tab.on{background:#1F3A5F;color:#fff;border-color:#1F3A5F}
 .row-card{background:#fff;border:1px solid #e9e4dc;padding:18px;margin-bottom:12px;font-size:13px}.row-card p{margin:6px 0;color:#596970}.points{font:700 44px Montserrat;color:#1F3A5F}
 @media(max-width:620px){.gallery>img{height:300px}.home-search{padding:12px 5%}}
+
+:root {
+    --azul-noche: #1F3A5F;
+    --madera: #C9A66B;
+    --madera-oscuro: #966B38;
+    --crema: #F7F3EC;
+    --crema-suave: #EDE5D6;
+    --grafito: #25282A;
+    --grafito-medio: #3E4347;
+    --verde: #2F6B4F;
+    --verde-claro: #E3EFE9;
+}
+
+/* 1. CREMA: Base cálida de toda la aplicación */
+body {
+    background: var(--crema);
+    color: var(--grafito);
+}
+
+.trust-row,
+.featured {
+    background: var(--crema-suave);
+    border-color: #DFD5C3;
+}
+
+/* 2. GRAFITO: Contraste sólido en barra superior, textos y contenedores */
+.top-strip {
+    background: var(--grafito);
+    color: var(--crema);
+}
+
+.nav-link {
+    color: var(--grafito-medio);
+    font-weight: 600;
+}
+
+.product-name,
+.detail-extra h3,
+.trust-row b {
+    color: var(--grafito);
+}
+
+.home-search {
+    background: var(--crema);
+    border-bottom: 1px solid #DFD5C3;
+}
+
+.home-search input {
+    border-color: var(--grafito-medio);
+}
+
+/* 3. AZUL NOCHE: Identidad estructural */
+.hero,
+.primary-btn,
+.cart-btn,
+.footer {
+    background: var(--azul-noche);
+}
+
+.advice-banner {
+    background: linear-gradient(135deg, var(--azul-noche) 0%, var(--grafito) 100%);
+}
+
+/* 4. MADERA: Calidez artesanal y llamadas a la acción secundarias */
+.brand-mark,
+.footer-logo,
+.advice-art {
+    color: var(--madera);
+}
+
+.cream-btn {
+    background: var(--madera);
+    color: var(--grafito);
+}
+
+.secondary-btn {
+    background: var(--crema-suave);
+    color: var(--grafito);
+    border: 1px solid var(--madera);
+}
+
+.arrow-link,
+.back-link,
+.nav-link.active,
+.nav-link:hover {
+    color: var(--madera-oscuro);
+}
+
+/* 5. VERDE: Visibilidad en etiquetas, carrito, confianza y beneficios */
+.cart-btn span {
+    background: var(--verde);
+    color: #fff;
+}
+
+.product-image span {
+    background: var(--verde);
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+}
+
+.product-bottom button {
+    background: var(--verde);
+    transition: background 0.2s;
+}
+
+.product-bottom button:hover {
+    background: var(--azul-noche);
+}
+
+.msi,
+.success-icon,
+.advice-points p {
+    color: var(--verde);
+    font-weight: 600;
+}
+
+.trust-row div {
+    border-left: 3px solid var(--verde);
+    padding-left: 12px;
+}
