@@ -139,3 +139,11 @@ body {
     border-left: 3px solid var(--verde);
     padding-left: 12px;
 }
+.rate{display:block;color:#8a6a35;font-size:12px;margin:2px 0 6px}.rate-big{font-size:18px;color:#8a6a35;margin:6px 0}.rate-big small{color:#879195}
+.review{border-bottom:1px solid #e7e1d8;padding:10px 0;font-size:13px}.review p{margin:4px 0;color:#596970}.review small{color:#879195;margin-left:6px}
+.review-form label,.factura-box label{display:block;font-size:11px;font-weight:700;color:#43535a;margin:10px 0}.review-form textarea,.review-form select,.factura-box input:not([type=checkbox]),.factura-box select{display:block;width:100%;padding:10px;border:1px solid #dedbd4;margin-top:6px;background:#fff}
+.factura-box{background:#f7f3ec;border:1px solid #e7e1d8;padding:12px 14px;margin:8px 0}.factura-box small{font-size:10px;color:#879195}
+.mini-grid{grid-template-columns:repeat(2,1fr);gap:12px}.mini-grid .product-image{height:120px}
+.legal h3{font:600 16px Montserrat;color:#1F3A5F;margin:26px 0 6px}.legal p{font-size:14px;line-height:1.8;color:#596970;margin:0}.legal-links{display:flex;flex-wrap:wrap;gap:18px;margin-top:34px;padding-top:18px;border-top:1px solid #e7e1d8}.legal-links .link{font-size:13px}
+.wa{position:fixed;right:18px;bottom:18px;z-index:30;background:#4E8A5B;color:#fff;text-decoration:none;font:700 13px Montserrat,sans-serif;padding:12px 16px;border-radius:30px;box-shadow:0 6px 18px #0003}
+.footer-main button{display:block}
